@@ -29,6 +29,8 @@ POSITIVE_WORDS = [
     "won",
     "🔥",
     "😂",
+    "hyped",
+    "bussin",
 ]
 
 NEGATIVE_WORDS = [
@@ -47,6 +49,8 @@ NEGATIVE_WORDS = [
     "😤",
     "😞",
     "😢",
+    "exhausted",
+    "mid",
 ]
 
 # ---------------------------------------------------------------------
@@ -69,6 +73,16 @@ SAMPLE_POSTS = [
     "I mean, the interview went okay I guess 🥲",
     "Ugh Monday again, but at least there's coffee ☕",
     "bruh the wifi is down AGAIN 😤",
+    "I love getting stuck in traffic",
+    "Oh great, another Monday meeting",
+    "that concert was sick",
+    "your new fit is fire",
+    "I feel sick today",
+    "I'm fine 🙂",
+    "got the job 😭😭",
+    "lol 💀",
+    "exhausted but proud of myself",
+    "I hate how much I love this show",
 ]
 
 # Human labels for each post above.
@@ -92,6 +106,16 @@ TRUE_LABELS = [
     "mixed",     # "I mean, the interview went okay I guess 🥲"
     "mixed",     # "Ugh Monday again, but at least there's coffee ☕"
     "negative",  # "bruh the wifi is down AGAIN 😤"
+    "negative",  # "I love getting stuck in traffic"
+    "negative",  # "Oh great, another Monday meeting"
+    "positive",  # "that concert was sick"
+    "positive",  # "your new fit is fire"
+    "negative",  # "I feel sick today"
+    "negative",  # "I'm fine 🙂"
+    "positive",  # "got the job 😭😭"
+    "positive",  # "lol 💀"
+    "mixed",     # "exhausted but proud of myself"
+    "mixed",     # "I hate how much I love this show"
 ]
 
 # TODO: Add 5-10 more posts and labels.
