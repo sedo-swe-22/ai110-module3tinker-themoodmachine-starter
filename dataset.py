@@ -83,6 +83,12 @@ SAMPLE_POSTS = [
     "lol 💀",
     "exhausted but proud of myself",
     "I hate how much I love this show",
+    "worst service ever, never going back",
+    "yay no more homework!!",
+    "ok so the exam was hard but I think I did fine",
+    "the meeting is at 3pm in room 204",
+    "I'm not even mad, that's actually hilarious 😂",
+    "can't believe how stressed I am rn 😩",
 ]
 
 # Human labels for each post above.
@@ -116,6 +122,12 @@ TRUE_LABELS = [
     "positive",  # "lol 💀"
     "mixed",     # "exhausted but proud of myself"
     "mixed",     # "I hate how much I love this show"
+    "negative",  # "worst service ever, never going back"
+    "positive",  # "yay no more homework!!"
+    "mixed",     # "ok so the exam was hard but I think I did fine"
+    "neutral",   # "the meeting is at 3pm in room 204"
+    "positive",  # "I'm not even mad, that's actually hilarious 😂"
+    "negative",  # "can't believe how stressed I am rn 😩"
 ]
 
 # TODO: Add 5-10 more posts and labels.

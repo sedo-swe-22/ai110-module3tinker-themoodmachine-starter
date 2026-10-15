@@ -18,9 +18,11 @@ from dataset import POSITIVE_WORDS, NEGATIVE_WORDS
 # Words that flip the meaning of the sentiment word right after them.
 NEGATORS = {
     "not", "no", "never",
-    "don't", "dont", "isn't", "isnt", "can't", "cant",
+    "don't", "dont", "isn't", "isnt",
     "won't", "wont", "didn't", "didnt", "wasn't", "wasnt",
 }
+# "can't" is left out on purpose: it is mostly an idiom ("can't believe how
+# stressed I am", "can't wait") that does not negate the word that follows.
 
 # Punctuation kept as tokens so negation cannot leak across a clause boundary.
 CLAUSE_BREAKS = {",", ".", ";", ":", "!", "?"}
