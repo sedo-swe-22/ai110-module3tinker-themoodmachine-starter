@@ -23,6 +23,12 @@ POSITIVE_WORDS = [
     "chill",
     "relaxed",
     "amazing",
+    "best",
+    "proud",
+    "hopeful",
+    "won",
+    "🔥",
+    "😂",
 ]
 
 NEGATIVE_WORDS = [
@@ -36,6 +42,11 @@ NEGATIVE_WORDS = [
     "stressed",
     "hate",
     "boring",
+    "ugh",
+    "cancelled",
+    "😤",
+    "😞",
+    "😢",
 ]
 
 # ---------------------------------------------------------------------
@@ -50,6 +61,14 @@ SAMPLE_POSTS = [
     "This is fine",
     "So excited for the weekend",
     "I am not happy about this",
+    "Lowkey stressed about finals but kind of proud of myself for starting early 😅",
+    "no cap this was the best pizza I've ever had 🍕🔥",
+    "my flight got cancelled again 💀 love that for me",
+    "Just got back from the store. Bought milk and eggs.",
+    "omg we won!!! 😂😂 I'm literally shaking",
+    "I mean, the interview went okay I guess 🥲",
+    "Ugh Monday again, but at least there's coffee ☕",
+    "bruh the wifi is down AGAIN 😤",
 ]
 
 # Human labels for each post above.
@@ -65,6 +84,14 @@ TRUE_LABELS = [
     "neutral",   # "This is fine"
     "positive",  # "So excited for the weekend"
     "negative",  # "I am not happy about this"
+    "mixed",     # "Lowkey stressed about finals but kind of proud of myself for starting early 😅"
+    "positive",  # "no cap this was the best pizza I've ever had 🍕🔥"
+    "negative",  # "my flight got cancelled again 💀 love that for me"
+    "neutral",   # "Just got back from the store. Bought milk and eggs."
+    "positive",  # "omg we won!!! 😂😂 I'm literally shaking"
+    "mixed",     # "I mean, the interview went okay I guess 🥲"
+    "mixed",     # "Ugh Monday again, but at least there's coffee ☕"
+    "negative",  # "bruh the wifi is down AGAIN 😤"
 ]
 
 # TODO: Add 5-10 more posts and labels.

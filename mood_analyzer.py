@@ -9,9 +9,24 @@ This class starts with very simple logic:
   - Convert that score into a mood label
 """
 
+import re
+import string
 from typing import List, Dict, Tuple, Optional
 
 from dataset import POSITIVE_WORDS, NEGATIVE_WORDS
+
+# Words that flip the meaning of the sentiment word right after them.
+NEGATORS = {
+    "not", "no", "never",
+    "don't", "dont", "isn't", "isnt", "can't", "cant",
+    "won't", "wont", "didn't", "didnt", "wasn't", "wasnt",
+}
+
+# Punctuation kept as tokens so negation cannot leak across a clause boundary.
+CLAUSE_BREAKS = {",", ".", ";", ":", "!", "?"}
+
+# A negator flips sentiment words up to this many tokens after it.
+NEGATION_WINDOW = 3
 
 
 class MoodAnalyzer:
@@ -52,8 +67,15 @@ class MoodAnalyzer:
           - Handle simple emojis separately (":)", ":-(", "🥲", "😂")
           - Normalize repeated characters ("soooo" -> "soo")
         """
-        cleaned = text.strip().lower()
-        tokens = cleaned.split()
+        # Phone keyboards type curly apostrophes ("don’t"); normalize them.
+        cleaned = text.strip().lower().replace("’", "'")
+        # Words (keeping apostrophes) or single non-word symbols such as emojis.
+        raw_tokens = re.findall(r"[a-z0-9']+|[^\w\s]", cleaned)
+        # Drop punctuation except clause breaks, which scope negation.
+        tokens = [
+            t for t in raw_tokens
+            if t not in string.punctuation or t in CLAUSE_BREAKS
+        ]
 
         return tokens
 
@@ -75,15 +97,47 @@ class MoodAnalyzer:
           - Give some words higher weights than others (for example "hate" < "annoyed")
           - Treat emojis or slang (":)", "lol", "💀") as strong signals
         """
-        # TODO: Implement this method.
-        #   1. Call self.preprocess(text) to get tokens.
-        #   2. Loop over the tokens.
-        #   3. Increase the score for positive words, decrease for negative words.
-        #   4. Return the total score.
-        #
-        # Hint: if you implement negation, you may want to look at pairs of tokens,
-        # like ("not", "happy") or ("never", "fun").
-        pass
+        positive_count, negative_count = self._count_hits(self.preprocess(text))
+        return positive_count - negative_count
+
+    def _count_hits(self, tokens: List[str]) -> Tuple[int, int]:
+        """
+        Count positive and negative hits, flipping a word's polarity when a
+        negator appears within NEGATION_WINDOW tokens before it ("not very
+        happy" counts as negative). A clause break or "but" ends the negation.
+        """
+        positive_count = 0
+        negative_count = 0
+        negation_left = 0
+
+        for token in tokens:
+            if token in NEGATORS:
+                negation_left = NEGATION_WINDOW
+                continue
+            if token in CLAUSE_BREAKS or token == "but":
+                negation_left = 0
+                continue
+
+            in_negation = negation_left > 0
+            if negation_left > 0:
+                negation_left -= 1
+
+            if token in self.positive_words:
+                polarity = 1
+            elif token in self.negative_words:
+                polarity = -1
+            else:
+                continue
+
+            if in_negation:
+                polarity = -polarity
+
+            if polarity > 0:
+                positive_count += 1
+            else:
+                negative_count += 1
+
+        return positive_count, negative_count
 
     # ---------------------------------------------------------------------
     # Label prediction
@@ -105,12 +159,17 @@ class MoodAnalyzer:
         Just remember that whatever labels you return should match the labels
         you use in TRUE_LABELS in dataset.py if you care about accuracy.
         """
-        # TODO: Implement this method.
-        #   1. Call self.score_text(text) to get the numeric score.
-        #   2. Return "positive" if the score is above 0.
-        #   3. Return "negative" if the score is below 0.
-        #   4. Return "neutral" otherwise.
-        pass
+        positive_count, negative_count = self._count_hits(self.preprocess(text))
+        score = positive_count - negative_count
+
+        if score > 0:
+            return "positive"
+        if score < 0:
+            return "negative"
+        # A zero score with hits on both sides is mixed, not neutral.
+        if positive_count > 0 and negative_count > 0:
+            return "mixed"
+        return "neutral"
 
     # ---------------------------------------------------------------------
     # Explanations (optional but recommended)
